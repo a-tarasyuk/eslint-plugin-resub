@@ -3,8 +3,9 @@ export default {
   parserOptions: {
     sourceType: 'module',
   },
+  plugins: ["resub"],
   rules: {
-    'no-state-access': 'error',
-    'override-calls-super': 'error',
+    'resub/no-state-access': 'error',
+    'resub/override-calls-super': 'error',
   },
 }
