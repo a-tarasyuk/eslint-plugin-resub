@@ -3,3 +3,4 @@ tests
 .eslintrc
 jest.config.js
 tsconfig.json
+.travis.yml
