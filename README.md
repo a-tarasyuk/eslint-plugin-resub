@@ -1,6 +1,6 @@
 # eslint-plugin-resub
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/a-tarasyuk/eslint-plugin-resub/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/eslint-plugin-resub.svg?style=flat-square)](https://www.npmjs.com/package/eslint-plugin-resub) [![Build Status](https://img.shields.io/travis/a-tarasyuk/eslint-plugin-resub/master.svg?style=flat-square)](https://travis-ci.org/a-tarasyuk/eslint-plugin-resub) [![npm downloads](https://img.shields.io/npm/dm/eslint-plugin-resub.svg?style=flat-square)](https://www.npmjs.com/package/eslint-plugin-resub)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/a-tarasyuk/eslint-plugin-resub/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/eslint-plugin-resub.svg?style=flat-square)](https://www.npmjs.com/package/eslint-plugin-resub) ![Travis (.com) master](https://img.shields.io/travis/com/a-tarasyuk/eslint-plugin-resub/master.svg?style=flat-square) [![npm downloads](https://img.shields.io/npm/dm/eslint-plugin-resub.svg?style=flat-square)](https://www.npmjs.com/package/eslint-plugin-resub)
 
 ## Installation
 
