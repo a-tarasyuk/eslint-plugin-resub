@@ -12,7 +12,7 @@ const methodsMap = new Map([
 ].map(name => [name, true]));
 
 export default createRule({
-  name: 'override-сalls-super',
+  name: 'override-calls-super',
   meta: {
     docs: {
       description: `require 'super' calls in overridden methods`,

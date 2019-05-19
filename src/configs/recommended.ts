@@ -5,6 +5,6 @@ export default {
   },
   rules: {
     'no-state-access': 'error',
-    'override-сalls-super': 'error',
+    'override-calls-super': 'error',
   },
 }

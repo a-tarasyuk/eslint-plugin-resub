@@ -26,8 +26,8 @@ Then configure the rules you want to use under the rules section.
 ```json
 {
   "rules": {
-    "resub/override-сalls-super": "error",
-    "resub/no-state-access": "error",
+    "resub/override-calls-super": "error",
+    "resub/no-state-access": "error"
   }
 }
 ```

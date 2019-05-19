@@ -1,7 +1,7 @@
-import overrideCallsSuper from './override-сalls-super';
+import overrideCallsSuper from './override-calls-super';
 import noStateAccess from './no-state-access';
 
 export default {
-  'override-сalls-super': overrideCallsSuper,
+  'override-calls-super': overrideCallsSuper,
   'no-state-access': noStateAccess,
 }
