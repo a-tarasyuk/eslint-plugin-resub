@@ -5,7 +5,7 @@
 ## Installation
 
 ```
-$ npm i eslint eslint-plugin-resub @typescript-eslint/parser --save-dev
+$ npm i eslint-plugin-resub @typescript-eslint/parser --save-dev
 ```
 
 ## Usage

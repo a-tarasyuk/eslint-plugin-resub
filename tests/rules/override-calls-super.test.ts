@@ -1,9 +1,10 @@
-import { RuleTester as ESLintRuleTester } from 'eslint';
-import { TSESLint } from '@typescript-eslint/experimental-utils';
+import { RuleTester } from '../support/RuleTester';
 import rule from '../../src/rules/override-calls-super';
 
-const RuleTester: TSESLint.RuleTester = ESLintRuleTester as any;
 const ruleTester = new RuleTester({
+  parserOptions: {
+    warnOnUnsupportedTypeScriptVersion: false,
+  },
   parser: '@typescript-eslint/parser',
 });
 
@@ -20,9 +21,9 @@ ruleTester.run('override-calls-super', rule, {
 
   invalid: [{
     code: `
-        class Component extends ComponentBase {
-            componentWillMount() {}
-        }
+      class Component extends ComponentBase {
+        componentWillMount() {}
+      }
     `,
 
     errors: [{
@@ -31,11 +32,11 @@ ruleTester.run('override-calls-super', rule, {
     }],
   }, {
     code: `
-        class Component extends ComponentBase {
-            componentWillMount() {
-              this._isMounted = true;
-            }
+      class Component extends ComponentBase {
+        componentWillMount() {
+          this._isMounted = true;
         }
+      }
     `,
 
     errors: [{
