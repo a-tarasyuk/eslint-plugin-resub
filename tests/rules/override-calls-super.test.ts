@@ -5,7 +5,7 @@ const ruleTester = new RuleTester({
   parserOptions: {
     warnOnUnsupportedTypeScriptVersion: false,
   },
-  parser: '@typescript-eslint/parser',
+  parser: require.resolve('@typescript-eslint/parser'),
 });
 
 ruleTester.run('override-calls-super', rule, {
