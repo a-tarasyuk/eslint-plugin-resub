@@ -11,34 +11,38 @@ const ruleTester = new RuleTester({
 ruleTester.run('override-calls-super', rule, {
   valid: [{
     code: `
-      class Component extends ComponentBase {
-        componentWillMount() {
-          super.componentWillMount();
-        }
-      }
+class Component extends ComponentBase {
+  componentWillMount() {
+    super.componentWillMount();
+  }
+}
+    `,
+  }, {
+    code: `
+class Component {
+  componentWillMount() {}
+}
     `,
   }],
 
   invalid: [{
     code: `
-      class Component extends ComponentBase {
-        componentWillMount() {}
-      }
+class Component extends ComponentBase {
+  componentWillMount() {}
+}
     `,
-
     errors: [{
       messageId: 'callSuperError',
       data: { methodName: 'componentWillMount' },
     }],
   }, {
     code: `
-      class Component extends ComponentBase {
-        componentWillMount() {
-          this._isMounted = true;
-        }
-      }
+class Component extends ComponentBase {
+  componentWillMount() {
+    this._isMounted = true;
+  }
+}
     `,
-
     errors: [{
       messageId: 'callSuperError',
       data: { methodName: 'componentWillMount' },

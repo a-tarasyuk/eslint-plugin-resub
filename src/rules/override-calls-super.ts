@@ -29,6 +29,22 @@ export default createRule({
   defaultOptions: [],
 
   create: function (context) {
+    let isReSubComponent = false;
+
+    const enterClass = (node: TSESTree.ClassDeclaration) => {
+      if (
+        node.superClass &&
+        node.superClass.type === AST_NODE_TYPES.Identifier &&
+        /ComponentBase/g.test(node.superClass.name)
+      ) {
+        isReSubComponent = true;
+      }
+    };
+
+    const exitClass = () => {
+      isReSubComponent = false;
+    };
+
     const isSuperCall = (statement: TSESTree.Statement | undefined): boolean => (
       !!statement
         && statement.type === AST_NODE_TYPES.ExpressionStatement
@@ -46,7 +62,15 @@ export default createRule({
     );
 
     const validate = (node: TSESTree.MethodDefinition): void => {
-      if (node.key.type === AST_NODE_TYPES.Identifier && methodsMap.has(node.key.name) && !isFirstSuperCallStatement(node.value.body)) {
+      if (!isReSubComponent) {
+        return;
+      }
+
+      if (
+        node.key.type === AST_NODE_TYPES.Identifier &&
+        methodsMap.has(node.key.name) &&
+        !isFirstSuperCallStatement(node.value.body)
+      ) {
         context.report({
           messageId: hasSupperCall(node.value.body) ? 'superShouldBeFirstStatement' : 'callSuperError',
           node,
@@ -56,6 +80,8 @@ export default createRule({
     };
 
     return {
+      ClassDeclaration: enterClass,
+      'ClassDeclaration:exit': exitClass,
       MethodDefinition: validate,
     };
   },

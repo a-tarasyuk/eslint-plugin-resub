@@ -19,18 +19,36 @@ export default createRule({
 
   create: function (context) {
     const isState = (name: string): boolean => name === 'state';
+
+    let isReSubComponent = false;
     let isComponentWillMount = false;
 
+    const enterClass = (node: TSESTree.ClassDeclaration) => {
+      if (
+        node.superClass &&
+        node.superClass.type === AST_NODE_TYPES.Identifier &&
+        /ComponentBase/g.test(node.superClass.name)
+      ) {
+        isReSubComponent = true;
+      }
+    };
+
+    const exitClass = () => {
+      isReSubComponent = false;
+    };
+
     const enterMethod = (node: TSESTree.MethodDefinition) => {
-      if (!isComponentWillMount && (node.key.type === AST_NODE_TYPES.Identifier && node.key.name === 'componentWillMount')) {
+      if (
+        isReSubComponent &&
+        node.key.type === AST_NODE_TYPES.Identifier &&
+        node.key.name === 'componentWillMount'
+      ) {
         isComponentWillMount = true;
       }
     }
 
     const exitMethod = () => {
-      if (isComponentWillMount) {
-        isComponentWillMount = false;
-      }
+      isComponentWillMount = false;
     }
 
     const getStateNode = (node: TSESTree.Node): TSESTree.Identifier | undefined => {
@@ -72,6 +90,8 @@ export default createRule({
     }
 
     return {
+      ClassDeclaration: enterClass,
+      'ClassDeclaration:exit': exitClass,
       MethodDefinition: enterMethod,
       'MethodDefinition:exit': exitMethod,
       ThisExpression: validate,
