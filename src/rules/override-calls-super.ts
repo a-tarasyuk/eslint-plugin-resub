@@ -2,6 +2,10 @@ import { TSESTree, AST_NODE_TYPES } from '@typescript-eslint/experimental-utils'
 import { createRule } from '../utils';
 
 const methodsMap = new Map([
+  'UNSAFE_componentWillReceiveProps',
+  'UNSAFE_componentWillUpdate',
+  'UNSAFE_componentWillMount',
+
   'componentWillReceiveProps',
   'componentWillUnmount',
   'componentWillUpdate',

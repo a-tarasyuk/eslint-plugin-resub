@@ -9,8 +9,9 @@ const ruleTester = new RuleTester({
 });
 
 ruleTester.run('no-state-access', rule, {
-  valid: [{
-    code: `
+  valid: [
+    {
+      code: `
 class Component extends ComponentBase {
   componentWillMount() {}
   render() {}
@@ -21,25 +22,36 @@ class Component1 extends ComponentBase {
   render() {}
 }
     `,
-  }, {
-    code: `
+    },
+    {
+      code: `
 class Component1 {
   componentWillMount() {}
 }
-    `,
-  }, {
-    code: `
+      `,
+    },
+    {
+      code: `
 class Component1 {
   state = {};
   componentWillMount() {
     const state = this.state;
   }
 }
-    `,
-  }],
+      `,
+    },
+    {
+      code: `
+class Component1 {
+  UNSAFE_componentWillMount() {}
+}
+      `
+    }
+  ],
 
-  invalid: [{
-    code: `
+  invalid: [
+    {
+      code: `
 class Component extends ComponentBase {
   componentWillMount() {
     const a = this.state.a;
@@ -60,19 +72,42 @@ class Component1 extends ComponentBase {
   }
   render() {}
 }
-    `,
-    errors: [{
-      messageId: 'stateAccsessError',
-    }, {
-      messageId: 'stateAccsessError',
-    }, {
-      messageId: 'stateAccsessError',
-    }, {
-      messageId: 'stateAccsessError',
-    }, {
-      messageId: 'stateAccsessError',
-    }, {
-      messageId: 'stateAccsessError',
-    }],
-  }],
+      `,
+      errors: [
+        {
+          messageId: 'stateAccsessError',
+        },
+        {
+          messageId: 'stateAccsessError',
+        },
+        {
+          messageId: 'stateAccsessError',
+        },
+        {
+          messageId: 'stateAccsessError',
+        },
+        {
+          messageId: 'stateAccsessError',
+        },
+        {
+          messageId: 'stateAccsessError',
+        },
+      ],
+    },
+    {
+      code: `
+class Component1 extends ComponentBase {
+  UNSAFE_componentWillMount() {
+    const a = this.state.a;
+  }
+  render() {}
+}
+      `,
+      errors: [
+        {
+          messageId: 'stateAccsessError',
+        },
+      ],
+    },
+  ],
 });

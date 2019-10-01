@@ -41,7 +41,7 @@ export default createRule({
       if (
         isReSubComponent &&
         node.key.type === AST_NODE_TYPES.Identifier &&
-        node.key.name === 'componentWillMount'
+        ['componentWillMount', 'UNSAFE_componentWillMount'].includes(node.key.name)
       ) {
         isComponentWillMount = true;
       }

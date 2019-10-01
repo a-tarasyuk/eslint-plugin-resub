@@ -9,43 +9,75 @@ const ruleTester = new RuleTester({
 });
 
 ruleTester.run('override-calls-super', rule, {
-  valid: [{
-    code: `
+  valid: [
+    {
+      code: `
 class Component extends ComponentBase {
   componentWillMount() {
     super.componentWillMount();
   }
 }
-    `,
-  }, {
-    code: `
+      `,
+    },
+    {
+      code: `
 class Component {
   componentWillMount() {}
 }
-    `,
-  }],
+      `,
+    },
+    {
+      code: `
+class Component {
+  UNSAFE_componentWillMount() {}
+}
+      `,
+    },
+  ],
 
-  invalid: [{
-    code: `
+  invalid: [
+    {
+      code: `
 class Component extends ComponentBase {
   componentWillMount() {}
 }
-    `,
-    errors: [{
-      messageId: 'callSuperError',
-      data: { methodName: 'componentWillMount' },
-    }],
-  }, {
-    code: `
+      `,
+      errors: [
+        {
+          messageId: 'callSuperError',
+          data: { methodName: 'componentWillMount' },
+        }
+      ],
+    },
+    {
+      code: `
 class Component extends ComponentBase {
   componentWillMount() {
     this._isMounted = true;
   }
 }
-    `,
-    errors: [{
-      messageId: 'callSuperError',
-      data: { methodName: 'componentWillMount' },
-    }],
-  }],
+      `,
+      errors: [
+        {
+          messageId: 'callSuperError',
+          data: { methodName: 'componentWillMount' },
+        },
+      ],
+    },
+    {
+      code: `
+class Component extends ComponentBase {
+  UNSAFE_componentWillMount() {
+    this._isMounted = true;
+  }
+}
+      `,
+      errors: [
+        {
+          messageId: 'callSuperError',
+          data: { methodName: 'UNSAFE_componentWillMount' },
+        },
+      ],
+    },
+  ],
 });
