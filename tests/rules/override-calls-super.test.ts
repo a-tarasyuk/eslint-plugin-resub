@@ -46,7 +46,7 @@ class Component extends ComponentBase {
         {
           messageId: 'callSuperError',
           data: { methodName: 'componentWillMount' },
-        }
+        },
       ],
     },
     {

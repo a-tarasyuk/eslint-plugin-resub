@@ -45,8 +45,8 @@ class Component1 {
 class Component1 {
   UNSAFE_componentWillMount() {}
 }
-      `
-    }
+      `,
+    },
   ],
 
   invalid: [
