@@ -1,4 +1,4 @@
-# Require 'super' calls in overridden methods
+# Require `super` calls in overridden methods
 
 ## Rule Details
 

@@ -44,7 +44,7 @@ Then configure the rules you want to use under the rules section.
 
 | Name                                                           | Description                                          |
 | -------------------------------------------------------------- | ---------------------------------------------------- |
-| [`no-state-access`](./docs/rules/no-state-access)              | Disallow state accsess in ReSub `componentWillMount` |
+| [`no-state-access`](./docs/rules/no-state-access.md)              | Disallow state accsess in ReSub `componentWillMount` |
 | [`override-calls-super`](./docs/rules/override-calls-super.md) | Require `super` calls in overridden methods argument |
 
 ## License and Copyright

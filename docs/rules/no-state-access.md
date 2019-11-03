@@ -1,4 +1,4 @@
-# Disallow state accsess in ReSub 'componentWillMount'
+# Disallow state accsess in ReSub `componentWillMount`
 
 ## Rule Details
 
