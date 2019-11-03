@@ -33,6 +33,13 @@ class Component {
 }
       `,
     },
+    {
+      code: `
+class Component {
+  getDerivedStateFromProps() {} // not static
+}
+      `,
+    },
   ],
 
   invalid: [
@@ -76,6 +83,20 @@ class Component extends ComponentBase {
         {
           messageId: 'callSuperError',
           data: { methodName: 'UNSAFE_componentWillMount' },
+        },
+      ],
+    },
+
+    {
+      code: `
+class Component extends ComponentBase {
+  static getDerivedStateFromProps() {}
+}
+      `,
+      errors: [
+        {
+          messageId: 'callSuperError',
+          data: { methodName: 'getDerivedStateFromProps' },
         },
       ],
     },

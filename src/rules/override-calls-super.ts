@@ -1,7 +1,10 @@
-import { TSESTree, AST_NODE_TYPES } from '@typescript-eslint/experimental-utils';
-import { createRule } from '../utils';
+import {
+  TSESTree,
+  AST_NODE_TYPES,
+} from '@typescript-eslint/experimental-utils';
+import { createRule, isReSubComponent } from '../utils';
 
-const methodsMap = new Map([
+const reactLifecycleMethods = [
   'UNSAFE_componentWillReceiveProps',
   'UNSAFE_componentWillUpdate',
   'UNSAFE_componentWillMount',
@@ -13,13 +16,13 @@ const methodsMap = new Map([
   'componentDidUpdate',
   'componentDidMount',
   '_buildInitialState',
-].map(name => [name, true]));
+];
 
 export default createRule({
   name: 'override-calls-super',
   meta: {
     docs: {
-      description: `require 'super' calls in overridden methods`,
+      description: `Require 'super' calls in overridden methods`,
       category: 'Possible Errors',
       recommended: 'error',
     },
@@ -32,51 +35,45 @@ export default createRule({
   },
   defaultOptions: [],
 
-  create: function (context) {
-    let isReSubComponent = false;
-
-    const enterClass = (node: TSESTree.ClassDeclaration) => {
-      if (
-        node.superClass &&
-        node.superClass.type === AST_NODE_TYPES.Identifier &&
-        /ComponentBase/g.test(node.superClass.name)
-      ) {
-        isReSubComponent = true;
-      }
-    };
-
-    const exitClass = () => {
-      isReSubComponent = false;
-    };
-
-    const isSuperCall = (statement: TSESTree.Statement | undefined): boolean => (
-      !!statement
-        && statement.type === AST_NODE_TYPES.ExpressionStatement
-        && statement.expression.type === AST_NODE_TYPES.CallExpression
-        && statement.expression.callee.type === AST_NODE_TYPES.MemberExpression
-        && statement.expression.callee.object.type === AST_NODE_TYPES.Super
-    );
-
-    const isFirstSuperCallStatement = (block: TSESTree.BlockStatement | null | undefined): boolean => (
-      !!block && isSuperCall(block.body[0])
-    );
-
-    const hasSupperCall = (block: TSESTree.BlockStatement | null | undefined): boolean => (
-      !!block && block.body.some(isSuperCall)
-    );
+  create: function(context) {
+    const isSuperCall = (statement: TSESTree.Statement | undefined): boolean =>
+      !!statement &&
+      statement.type === AST_NODE_TYPES.ExpressionStatement &&
+      statement.expression.type === AST_NODE_TYPES.CallExpression &&
+      statement.expression.callee.type === AST_NODE_TYPES.MemberExpression &&
+      statement.expression.callee.object.type === AST_NODE_TYPES.Super;
 
     const validate = (node: TSESTree.MethodDefinition): void => {
-      if (!isReSubComponent) {
+      if (
+        node.key.type !== AST_NODE_TYPES.Identifier ||
+        node.value.type !== AST_NODE_TYPES.FunctionExpression ||
+        !(
+          node.value.body &&
+          node.value.body.type === AST_NODE_TYPES.BlockStatement
+        )
+      ) {
         return;
       }
 
       if (
-        node.key.type === AST_NODE_TYPES.Identifier &&
-        methodsMap.has(node.key.name) &&
-        !isFirstSuperCallStatement(node.value.body)
+        !(node.static && node.key.name === 'getDerivedStateFromProps') &&
+        !reactLifecycleMethods.includes(node.key.name)
       ) {
+        return;
+      }
+
+      if (!isReSubComponent(context.getScope())) {
+        return;
+      }
+
+      const body = node.value.body.body;
+      const firstStatement = body[0];
+
+      if (!isSuperCall(firstStatement)) {
         context.report({
-          messageId: hasSupperCall(node.value.body) ? 'superShouldBeFirstStatement' : 'callSuperError',
+          messageId: body.some(isSuperCall)
+            ? 'superShouldBeFirstStatement'
+            : 'callSuperError',
           node,
           data: { methodName: node.key.name },
         });
@@ -84,8 +81,6 @@ export default createRule({
     };
 
     return {
-      ClassDeclaration: enterClass,
-      'ClassDeclaration:exit': exitClass,
       MethodDefinition: validate,
     };
   },
