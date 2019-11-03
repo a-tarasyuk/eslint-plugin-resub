@@ -1,5 +1,13 @@
-import { TSESTree, AST_NODE_TYPES } from '@typescript-eslint/experimental-utils';
-import { createRule } from '../utils';
+import {
+  TSESTree,
+  AST_NODE_TYPES,
+} from '@typescript-eslint/experimental-utils';
+import { createRule, isReSubComponent } from '../utils';
+
+const reactLifecycleMethods = [
+  'UNSAFE_componentWillMount',
+  'componentWillMount',
+];
 
 export default createRule({
   name: 'no-state-access',
@@ -17,41 +25,24 @@ export default createRule({
   },
   defaultOptions: [],
 
-  create: function (context) {
+  create: function(context) {
     const isState = (name: string): boolean => name === 'state';
-
-    let isReSubComponent = false;
-    let isComponentWillMount = false;
-
-    const enterClass = (node: TSESTree.ClassDeclaration) => {
-      if (
-        node.superClass &&
-        node.superClass.type === AST_NODE_TYPES.Identifier &&
-        /ComponentBase/g.test(node.superClass.name)
-      ) {
-        isReSubComponent = true;
-      }
-    };
-
-    const exitClass = () => {
-      isReSubComponent = false;
-    };
+    const stack: boolean[] = [];
 
     const enterMethod = (node: TSESTree.MethodDefinition) => {
-      if (
-        isReSubComponent &&
+      const isComponentWillMount =
         node.key.type === AST_NODE_TYPES.Identifier &&
-        ['componentWillMount', 'UNSAFE_componentWillMount'].includes(node.key.name)
-      ) {
-        isComponentWillMount = true;
-      }
-    }
+        reactLifecycleMethods.includes(node.key.name) &&
+        isReSubComponent(context.getScope());
 
-    const exitMethod = () => {
-      isComponentWillMount = false;
-    }
+      stack.push(isComponentWillMount);
+    };
 
-    const getStateNode = (node: TSESTree.Node): TSESTree.Identifier | undefined => {
+    const exitMethod = () => stack.pop();
+
+    const getStateNode = (
+      node: TSESTree.Node,
+    ): TSESTree.Identifier | undefined => {
       const {
         VariableDeclarator,
         MemberExpression,
@@ -60,23 +51,40 @@ export default createRule({
         Property,
       } = AST_NODE_TYPES;
 
-      if (node.type === MemberExpression && node.property.type === Identifier && isState(node.property.name)) {
+      if (
+        node.type === MemberExpression &&
+        node.property.type === Identifier &&
+        isState(node.property.name)
+      ) {
         return node.property;
       }
 
-      if (node.type === VariableDeclarator && node.id && node.id.type === ObjectPattern) {
-        const property = node.id.properties
-          .find((property) => property.type === Property && property.key.type === Identifier && isState(property.key.name));
+      if (
+        node.type === VariableDeclarator &&
+        node.id &&
+        node.id.type === ObjectPattern
+      ) {
+        const property = node.id.properties.find(
+          property =>
+            property.type === Property &&
+            property.key.type === Identifier &&
+            isState(property.key.name),
+        );
 
-        if (property && property.type === Property && property.key.type === Identifier) {
+        if (
+          property &&
+          property.type === Property &&
+          property.key.type === Identifier
+        ) {
           return property.key;
         }
       }
 
       return undefined;
-    }
+    };
 
     const validate = (node: TSESTree.ThisExpression) => {
+      const isComponentWillMount = stack.length && stack[stack.length - 1];
       if (!isComponentWillMount) {
         return;
       }
@@ -87,11 +95,9 @@ export default createRule({
           context.report({ messageId: 'stateAccsessError', node: stateNode });
         }
       }
-    }
+    };
 
     return {
-      ClassDeclaration: enterClass,
-      'ClassDeclaration:exit': exitClass,
       MethodDefinition: enterMethod,
       'MethodDefinition:exit': exitMethod,
       ThisExpression: validate,

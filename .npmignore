@@ -1,7 +1,11 @@
+docs
 src
 tests
+.editorconfig
 .eslintrc
-jest.config.js
-tsconfig.json
-tsconfig.eslint.json
+.prettierignore
+.prettierrc.json
 .travis.yml
+jest.config.js
+tsconfig.eslint.json
+tsconfig.json

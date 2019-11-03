@@ -4,4 +4,4 @@ import noStateAccess from './no-state-access';
 export default {
   'override-calls-super': overrideCallsSuper,
   'no-state-access': noStateAccess,
-}
+};

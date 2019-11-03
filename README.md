@@ -1,5 +1,7 @@
 # eslint-plugin-resub
 
+> [ReSub](https://github.com/microsoft/ReSub) specific linting rules for ESLint
+
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/a-tarasyuk/eslint-plugin-resub/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/eslint-plugin-resub.svg?style=flat-square)](https://www.npmjs.com/package/eslint-plugin-resub) ![Travis (.com) master](https://img.shields.io/travis/com/a-tarasyuk/eslint-plugin-resub/master.svg?style=flat-square) [![npm downloads](https://img.shields.io/npm/dm/eslint-plugin-resub.svg?style=flat-square)](https://www.npmjs.com/package/eslint-plugin-resub)
 
 ## Installation
@@ -15,9 +17,7 @@ Add `resub` to the plugins section of your `.eslintrc` configuration file. You c
 ```json
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "resub"
-  ]
+  "plugins": ["resub"]
 }
 ```
 
@@ -39,6 +39,13 @@ Then configure the rules you want to use under the rules section.
   "extends": "plugin:resub/recommended"
 }
 ```
+
+## Rules
+
+| Name                                                           | Description                                          |
+| -------------------------------------------------------------- | ---------------------------------------------------- |
+| [`no-state-access`](./docs/rules/no-state-access)              | Disallow state accsess in ReSub `componentWillMount` |
+| [`override-calls-super`](./docs/rules/override-calls-super.md) | Require `super` calls in overridden methods argument |
 
 ## License and Copyright
 
