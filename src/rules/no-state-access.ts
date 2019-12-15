@@ -29,7 +29,7 @@ export default createRule({
     const isState = (name: string): boolean => name === 'state';
     const stack: boolean[] = [];
 
-    const enterMethod = (node: TSESTree.MethodDefinition) => {
+    const enterMethod = (node: TSESTree.MethodDefinition): void => {
       const isComponentWillMount =
         node.key.type === AST_NODE_TYPES.Identifier &&
         reactLifecycleMethods.includes(node.key.name) &&
@@ -38,7 +38,9 @@ export default createRule({
       stack.push(isComponentWillMount);
     };
 
-    const exitMethod = () => stack.pop();
+    const exitMethod = (): void => {
+      stack.pop();
+    };
 
     const getStateNode = (
       node: TSESTree.Node,
@@ -71,11 +73,7 @@ export default createRule({
             isState(property.key.name),
         );
 
-        if (
-          property &&
-          property.type === Property &&
-          property.key.type === Identifier
-        ) {
+        if (property?.type === Property && property.key.type === Identifier) {
           return property.key;
         }
       }
@@ -83,7 +81,7 @@ export default createRule({
       return undefined;
     };
 
-    const validate = (node: TSESTree.ThisExpression) => {
+    const validate = (node: TSESTree.ThisExpression): void => {
       const isComponentWillMount = stack.length && stack[stack.length - 1];
       if (!isComponentWillMount) {
         return;

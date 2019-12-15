@@ -24,5 +24,5 @@ export const isReSubComponent = (
     return false;
   }
 
-  return /ComponentBase/g.test(superClass.name);
+  return superClass.name === 'ComponentBase';
 };

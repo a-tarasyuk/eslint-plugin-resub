@@ -5,7 +5,7 @@
     "ecmaFeatures": {},
     "ecmaVersion": 2018,
     "sourceType": "module",
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.eslint.json"
   },
   "plugins": ["@typescript-eslint"],
   "extends": [
@@ -20,11 +20,7 @@
     "es6": true
   },
   "rules": {
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "comma-dangle": ["error", "always-multiline"],
-    "indent": "off",
-    "@typescript-eslint/indent": ["error", 2]
+    "comma-dangle": ["error", "always-multiline"]
   },
   "globals": {},
   "settings": {}
