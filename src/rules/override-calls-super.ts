@@ -35,7 +35,7 @@ export default createRule({
   },
   defaultOptions: [],
 
-  create: function(context) {
+  create: function (context) {
     const isSuperCall = (statement: TSESTree.Statement | undefined): boolean =>
       statement?.type === AST_NODE_TYPES.ExpressionStatement &&
       statement.expression.type === AST_NODE_TYPES.CallExpression &&

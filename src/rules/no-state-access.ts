@@ -25,7 +25,7 @@ export default createRule({
   },
   defaultOptions: [],
 
-  create: function(context) {
+  create: function (context) {
     const isState = (name: string): boolean => name === 'state';
     const stack: boolean[] = [];
 
@@ -67,7 +67,7 @@ export default createRule({
         node.id.type === ObjectPattern
       ) {
         const property = node.id.properties.find(
-          property =>
+          (property) =>
             property.type === Property &&
             property.key.type === Identifier &&
             isState(property.key.name),
