@@ -20,7 +20,8 @@
     "es6": true
   },
   "rules": {
-    "comma-dangle": ["error", "always-multiline"]
+    "comma-dangle": ["error", "always-multiline"],
+    "@typescript-eslint/no-unused-vars": "off"
   },
   "globals": {},
   "settings": {}
