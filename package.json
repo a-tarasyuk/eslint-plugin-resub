@@ -9,8 +9,8 @@
     "resub"
   ],
   "author": {
-    "name": "Alexander Tarasyuk",
-    "email": "alexander.tarasyuk@outlook.com"
+    "name": "Oleksandr Tarasiuk",
+    "email": "oleksandr.tarasiuk@outlook.com"
   },
   "repository": {
     "type": "git",
@@ -29,23 +29,23 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@types/eslint": "7.2.2",
-    "@types/node": "14.6.4",
-    "@typescript-eslint/eslint-plugin": "4.0.1",
+    "@types/eslint": "7.2.4",
+    "@types/node": "14.14.7",
+    "@typescript-eslint/eslint-plugin": "4.7.0",
     "@typescript-eslint/parser": "2.11.0",
     "eslint": "6.7.2",
-    "husky": "4.2.5",
-    "jest": "26.4.2",
-    "prettier": "2.1.1",
-    "ts-jest": "26.3.0",
-    "typescript": "4.0.2"
+    "husky": "4.3.0",
+    "jest": "26.6.3",
+    "prettier": "2.1.2",
+    "ts-jest": "26.4.4",
+    "typescript": "4.0.5"
   },
   "dependencies": {
-    "@typescript-eslint/experimental-utils": "4.0.1"
+    "@typescript-eslint/experimental-utils": "4.7.0"
   },
   "peerDependencies": {
-    "@typescript-eslint/parser": "^4.0.1",
-    "eslint": "^7.8.1"
+    "@typescript-eslint/parser": "^4.7.0",
+    "eslint": "^7.13.0"
   },
   "engines": {
     "node": ">=0.10.0"
