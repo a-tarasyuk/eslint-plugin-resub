@@ -14,7 +14,6 @@ export default createRule({
   meta: {
     docs: {
       description: `Disallow state accsess in ReSub 'componentWillMount'`,
-      category: 'Possible Errors',
       recommended: 'error',
     },
     messages: {

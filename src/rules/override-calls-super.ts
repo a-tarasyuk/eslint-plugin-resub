@@ -23,7 +23,6 @@ export default createRule({
   meta: {
     docs: {
       description: `Require 'super' calls in overridden methods`,
-      category: 'Possible Errors',
       recommended: 'error',
     },
     messages: {
