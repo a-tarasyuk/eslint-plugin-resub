@@ -2,7 +2,7 @@ import {
   AST_NODE_TYPES,
   ESLintUtils,
   TSESLint,
-} from '@typescript-eslint/experimental-utils';
+} from '@typescript-eslint/utils';
 
 export const createRule = ESLintUtils.RuleCreator(() => '');
 

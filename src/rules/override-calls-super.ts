@@ -1,7 +1,7 @@
 import {
   TSESTree,
   AST_NODE_TYPES,
-} from '@typescript-eslint/experimental-utils';
+} from '@typescript-eslint/utils';
 import { createRule, isReSubComponent } from '../utils';
 
 const reactLifecycleMethods = [
