@@ -2,7 +2,7 @@
 
 > [ReSub](https://github.com/microsoft/ReSub) specific linting rules for ESLint
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/a-tarasyuk/eslint-plugin-resub/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/eslint-plugin-resub.svg?style=flat-square)](https://www.npmjs.com/package/eslint-plugin-resub) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/a-tarasyuk/eslint-plugin-resub/main?style=flat-square) ![Coveralls github](https://img.shields.io/coveralls/github/a-tarasyuk/eslint-plugin-resub?style=flat-square) [![npm downloads](https://img.shields.io/npm/dm/eslint-plugin-resub.svg?style=flat-square)](https://www.npmjs.com/package/eslint-plugin-resub)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/a-tarasyuk/eslint-plugin-resub/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/eslint-plugin-resub.svg?style=flat-square)](https://www.npmjs.com/package/eslint-plugin-resub) ![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/a-tarasyuk/eslint-plugin-resub/main.yml?style=flat-square) ![Coveralls github](https://img.shields.io/coveralls/github/a-tarasyuk/eslint-plugin-resub?style=flat-square) [![npm downloads](https://img.shields.io/npm/dm/eslint-plugin-resub.svg?style=flat-square)](https://www.npmjs.com/package/eslint-plugin-resub)
 
 ## Installation
 
